@@ -24,9 +24,16 @@
   grid-row: 1;
 }
 
+.topButton{
+  display: none;
+}
+
 
 @media screen and (max-width: 768px) {
   .container-nav {
     display: none;
+  }
+  .topButton{
+    display: block;
   }
 }
