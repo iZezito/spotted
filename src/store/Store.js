@@ -24,10 +24,7 @@ class NoticiaStore {
 
     enviarComentario(idNoticia) {
         api.post(`comentarios/${idNoticia}`, this.comentario).then((response) => {
-            console.log(this.noticias)
-            let noticiaTemp = this.noticias.find((item) => item.id === idNoticia)
-            this.noticias[noticiaTemp].comentarios.push(this.comentario)
-            console.log(this.noticias[noticiaTemp].comentarios)
+            this.comentario.texto = '';
             }).catch((erro) => console.log(erro))
     }
 

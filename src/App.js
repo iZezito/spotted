@@ -29,7 +29,7 @@ const App = () => {
                 </Nav>
 
             </div>
-            <div className="container justify-content-center" style={{width: '100vh', height: '100vh'}}>
+            <div className="main container justify-content-center" style={{width: '100vh', height: '100vh', overflowY:'scroll'}}>
                 {store.noticias.map((item) => {
                     return (
                         <Card style={{width: '50rem'}} key={item.id} className={'justify-content-center mt-3 mb-5 bg-dark'}>
