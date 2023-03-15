@@ -38,7 +38,7 @@ const App = () => {
       <div className="container justify-content-center" style={{width:'100vh', height:'100vh'}}>
           {store.noticias.map((item) => {
             return (
-                <Card style={{ width: '50rem' }} key={item.id} className={'justify-content-center'}>
+                <Card style={{ width: '50rem' }} key={item.id} className={'justify-content-center mt-3 mb-5'}>
                     <Card.Body>
                         <Card.Title>{item.titulo}</Card.Title>
                         <Card.Text>
