@@ -1,9 +1,8 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
 
-
-export default function GPTValidation(){
+export default function GPTValidation() {
 
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
@@ -13,7 +12,6 @@ export default function GPTValidation(){
         const model = 'text-davinci-002';
         const maxTokens = 2048;
 
-        const REACT_APP_OPENAI_API_KEY = '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';
 
         axios.post('https://api.openai.com/v1/completions', {
             prompt: prompt,
@@ -22,11 +20,11 @@ export default function GPTValidation(){
         }, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${REACT_APP_OPENAI_API_KEY}`
+                'Authorization': `Bearer ${process.env.API_KEY}`
             }
         }).then((response) => {
             console.log(response.data.choices[0].text);
-            setMessages((prevMessages) => [...prevMessages, { text: response.data.choices[0].text, isBot: true }]);
+            setMessages((prevMessages) => [...prevMessages, {text: response.data.choices[0].text, isBot: true}]);
             setMessage('');
         }).catch((error) => {
                 console.log(error);
@@ -37,7 +35,7 @@ export default function GPTValidation(){
     return (
         <div>
             <h1>Teste de GPT</h1>
-            <input value={message} type="text" onChange={(e) => setMessage(e.target.value)} />
+            <input value={message} type="text" onChange={(e) => setMessage(e.target.value)}/>
             <button onClick={sendMessage}>Enviar</button>
             <div>
                 {messages.map((message, index) => (
