@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, {useState} from 'react';
+import { API_KEY } from "../API_KEY";
 
 
 export default function GPTValidation() {
@@ -20,7 +21,7 @@ export default function GPTValidation() {
         }, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer `
+                'Authorization': `Bearer ${API_KEY}`
             }
         }).then((response) => {
             console.log(response.data.choices[0].text);
