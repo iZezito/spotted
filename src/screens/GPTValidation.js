@@ -20,7 +20,7 @@ export default function GPTValidation() {
         }, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${process.env.API_KEY}`
+                'Authorization': `Bearer `
             }
         }).then((response) => {
             console.log(response.data.choices[0].text);

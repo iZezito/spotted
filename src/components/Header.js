@@ -18,7 +18,10 @@ export default function Header(){
 
     return (
         <>
-            <FaBars color="white" className="topButton ms-4 mt-3" onClick={handleShowNav} size={35}/>
+            <div className="topButton">
+                <FaBars color="white" className="ms-2 mt-2" onClick={handleShowNav} size={35}/>
+                <h1 className="text-light mt-3 mx-auto">Spotted</h1>
+            </div>
             <Offcanvas show={showNav} onHide={handleCloseNav} className="bg-dark">
                 <Offcanvas.Header closeButton>
                     <Offcanvas.Title className="text-light">Spotted</Offcanvas.Title>

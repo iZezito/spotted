@@ -18,7 +18,8 @@ export default function Main() {
     }
 
     return (
-        <div className="main container justify-content-center overflow-auto" style={{ overflowY:'scroll'}}>
+        <div className="main container justify-content-center overflow-auto"
+        >
             {store.noticias.map((item) => {
                 return (
                     <Card style={{maxWidth: 'auto'}} key={item.id} className={'justify-content-center mt-3 mb-5 bg-dark'} fluid="auto">
