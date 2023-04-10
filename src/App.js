@@ -1,23 +1,11 @@
-import React, {useEffect, useState} from "react";
-import Nav from "react-bootstrap/Nav";
-import Card from 'react-bootstrap/Card';
-import Modal from "react-bootstrap/Modal";
+import React from "react";
 import Container from 'react-bootstrap/Container';
-import Offcanvas from 'react-bootstrap/Offcanvas';
-import Button from 'react-bootstrap/Button';
 import "./App.css";
-import NoticiaStore from "./store/Store";
-import {MdSend} from "react-icons/md";
-import {BiUserCircle, BiExit, BiNews, BiComment} from "react-icons/bi"
-import {GiLoveLetter, GiAcousticMegaphone} from "react-icons/gi"
-import {FaBars} from "react-icons/fa"
 import Main from "./screens/Main";
 import NotFoundPage from "./screens/NotFoundPage";
 import Header from "./components/Header";
 import {Routes, Route} from "react-router-dom";
 import GPTValidation from "./screens/GPTValidation";
-
-const store = new NoticiaStore()
 const App = () => {
 
 

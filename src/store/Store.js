@@ -3,6 +3,7 @@ import {makeAutoObservable} from "mobx";
 
 class NoticiaStore {
     noticias = []
+    noticiaAtualId = {}
     comentario = {texto:''}
 
     constructor() {
@@ -18,15 +19,23 @@ class NoticiaStore {
 
     }
 
-    setComentario(comentario) {
-        this.comentario.texto = comentario;
+    setNoticiaId(noticiaId) {
+        this.noticiaAtualId = noticiaId;
     }
 
-    enviarComentario(idNoticia) {
-        api.post(`comentarios/${idNoticia}`, this.comentario).then((response) => {
-            this.comentario.texto = '';
-            }).catch((erro) => console.log(erro))
+    setComentario(comentario) {
+        console.log(comentario);
+        this.comentario.texto = comentario;
+        console.log(this.comentario.texto);
     }
+
+    enviarComentario() {
+        api.post(`comentarios/${this.noticiaAtualId}`, this.comentario).then((response) => {
+            }).catch((erro) => console.log(erro)).finally(() => {
+                this.getNoticias();
+                this.comentario.texto = '';
+            })
+        }
 
 }
 

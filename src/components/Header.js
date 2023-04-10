@@ -4,6 +4,7 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import Nav from "react-bootstrap/Nav";
 import {BiExit, BiNews, BiUserCircle} from "react-icons/bi";
 import {GiAcousticMegaphone, GiLoveLetter} from "react-icons/gi";
+import {Link} from "react-router-dom";
 
 export default function Header(){
 
@@ -28,22 +29,22 @@ export default function Header(){
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                     <Nav defaultActiveKey="/home" className="flex-column">
-                        <Nav.Link eventKey="link-4"><BiUserCircle size={30}/>Perfil</Nav.Link>
-                        <Nav.Link href="/home"><BiNews size={30}/>Feed de noticias</Nav.Link>
-                        <Nav.Link eventKey="link-1"><GiLoveLetter size={30}/>Deixar recadinho</Nav.Link>
-                        <Nav.Link eventKey="link-2"><GiAcousticMegaphone size={30}/>Fofocar</Nav.Link>
-                        <Nav.Link eventKey="link-3"><BiExit size={30}/>Sair</Nav.Link>
+                        <Link to={'/perfil'} className={'nav-link'}><BiUserCircle size={30}/>Perfil</Link>
+                        <Link to={'/'} className={'nav-link'}><BiNews size={30}/>Feed de noticias</Link>
+                        <Link to={'/recados'} className={'nav-link'}><GiLoveLetter size={30}/>Deixar recadinho</Link>
+                        <Link to={'/fofoca'} className={'nav-link'}><GiAcousticMegaphone size={30}/>Fofocar</Link>
+                        <Link to={'/sair'} className={'nav-link'}><BiExit size={30}/>Sair</Link>
                     </Nav>
                 </Offcanvas.Body>
             </Offcanvas>
             <div className="container-nav">
 
                 <Nav defaultActiveKey="/" className="flex-column">
-                    <Nav.Link eventKey="link-4"><BiUserCircle size={30}/>Perfil</Nav.Link>
-                    <Nav.Link href="/"><BiNews size={30}/>Feed de noticias</Nav.Link>
-                    <Nav.Link href="/recados"><GiLoveLetter size={30}/>Deixar recadinho</Nav.Link>
-                    <Nav.Link eventKey="link-2"><GiAcousticMegaphone size={30}/>Fofocar</Nav.Link>
-                    <Nav.Link eventKey="link-3"><BiExit size={30}/>Sair</Nav.Link>
+                    <Link to={'/perfil'} className={'nav-link'}><BiUserCircle size={30}/>Perfil</Link>
+                    <Link to={'/'} className={'nav-link'}><BiNews size={30}/>Feed de noticias</Link>
+                    <Link to={'/recados'} className={'nav-link'}><GiLoveLetter size={30}/>Deixar recadinho</Link>
+                    <Link to={'/fofoca'} className={'nav-link'}><GiAcousticMegaphone size={30}/>Fofocar</Link>
+                    <Link to={'/sair'} className={'nav-link'}><BiExit size={30}/>Sair</Link>
                 </Nav>
 
             </div>

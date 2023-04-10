@@ -4,9 +4,10 @@ import {BiComment} from "react-icons/bi";
 import Modal from "react-bootstrap/Modal";
 import {MdSend} from "react-icons/md";
 import NoticiaStore from "../store/Store";
+import {observer} from "mobx-react";
 
 const store = new NoticiaStore()
-export default function Main() {
+export default observer(function Main() {
 
     const [show, setShow] = useState(false);
     const [comentarios, setComentarios] = useState([])
@@ -28,7 +29,11 @@ export default function Main() {
                             <Card.Text className={'text-light'}>
                                 {item.descricao}
                             </Card.Text>
-                            <Card.Subtitle className={'text-light'} onClick={() => handleShow(item.comentarios)}>
+                            <Card.Subtitle className={'text-light'} onClick={() => {
+                                handleShow(item.comentarios)
+                                store.setNoticiaId(item.id)
+                            }
+                            }>
                                 <p className={'text-light'}>Comentários {item.comentarios.length}<BiComment size={20} color={'white'}/></p>
                             </Card.Subtitle>
 
@@ -47,15 +52,15 @@ export default function Main() {
                             <p>{comentario.texto}</p>
                         )
                     })}
-                    <input type={'text'} className={'form-text text-light bg-dark'}
+                    <input type={'text'} className={'form-text'} value={store.comentario.texto}
                            onChange={(e) => store.setComentario(e.target.value)}/>
 
                     <MdSend onClick={() => store.enviarComentario()}
-                            style={{borderRadius: 20}} size={25} color={'white'} className={'ms-2 mb-1'}/>
+                            style={{borderRadius: 20}} size={25} color={'black'} className={'ms-2 mb-1'}/>
                 </Modal.Body>
             </Modal>
 
         </div>
     )
 
-}
+})
