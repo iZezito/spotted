@@ -10,18 +10,18 @@ const store = new NoticiaStore()
 export default observer(function Main() {
 
     const [show, setShow] = useState(false);
-    const [comentarios, setComentarios] = useState([])
+    const [indexNoticia, setIndexNoticia] = useState(0)
 
     const handleClose = () => setShow(false);
-    const handleShow = (coments) => {
-        setComentarios(coments);
+    const handleShow = (id) => {
+        setIndexNoticia(id)
         setShow(true);
     }
 
     return (
         <div className="main container justify-content-center overflow-auto"
         >
-            {store.noticias.map((item) => {
+            {store.noticias.map((item, index) => {
                 return (
                     <Card style={{maxWidth: 'auto'}} key={item.id} className={'justify-content-center mt-3 mb-5 bg-dark'} fluid="auto">
                         <Card.Body>
@@ -30,7 +30,7 @@ export default observer(function Main() {
                                 {item.descricao}
                             </Card.Text>
                             <Card.Subtitle className={'text-light'} onClick={() => {
-                                handleShow(item.comentarios)
+                                handleShow(index)
                                 store.setNoticiaId(item.id)
                             }
                             }>
@@ -47,10 +47,8 @@ export default observer(function Main() {
                     <Modal.Title className={'text-center'}>Comentários</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {comentarios.map((comentario) => {
-                        return (
-                            <p>{comentario.texto}</p>
-                        )
+                    {store.noticias[indexNoticia].comentarios.map((comentario) => {
+                        return <p>{comentario.texto}</p>
                     })}
                     <input type={'text'} className={'form-text'} value={store.comentario.texto}
                            onChange={(e) => store.setComentario(e.target.value)}/>
