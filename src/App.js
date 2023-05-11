@@ -11,15 +11,13 @@ const App = () => {
 
     return (
         <Container fluid="auto">
-        <div className="grid-container bg-dark">
+        
             <Header/>
             <Routes>
                 <Route path="/" element={<Main/>}/>
                 <Route path="/recados" element={<GPTValidation/>}/>
                 <Route exact path={"*"} element={<NotFoundPage/>}/>
             </Routes>
-
-        </div>
         </Container>
 
     );
