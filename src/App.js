@@ -5,28 +5,23 @@ import Main from "./screens/Main";
 import NotFoundPage from "./screens/NotFoundPage";
 import Header from "./components/Header";
 import {Routes, Route} from "react-router-dom";
-import AuthStore from './store/AuthStore';
-import { observer } from "mobx-react";
-import Acesso from "./screens/Acesso";
+import GPTValidation from "./screens/GPTValidation";
+const App = () => {
 
-
-const App = observer(() => {
-    const {isAuthenticated, logout} = AuthStore;
 
     return (
         <Container fluid="auto">
-
-            {isAuthenticated && <Header logout={logout} />}
+        
+            <Header/>
             <Routes>
-                {isAuthenticated && <Route exact path="/" element={<Main/>}/>}
-                {isAuthenticated && <Route path={"*"} element={<NotFoundPage/>}/>}
-                {!isAuthenticated && <Route path={"*"} element={<Acesso />}/>}
-
-
+                <Route path="/" element={<Main/>}/>
+                <Route path="/recados" element={<GPTValidation/>}/>
+                <Route exact path={"*"} element={<NotFoundPage/>}/>
             </Routes>
         </Container>
 
     );
-});
+}
+    ;
 
-export default App;
+    export default App;

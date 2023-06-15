@@ -12,11 +12,7 @@ class NoticiaStore {
     }
 
     getNoticias() {
-        api.get('noticias', {
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
-            }
-        }).then((response) => {
+        api.get('noticias').then((response) => {
             console.log(response.data)
             this.noticias = response.data
         }).catch((erro) => console.log(erro))
