@@ -4,6 +4,55 @@
   box-sizing: border-box;
 }
 
+.md-textbox{
+  position: relative;
+}
+
+.md-textbox > input{
+    height: 43px;
+    width: 260px;
+    padding-left: 16px;
+    border: 2px solid #888888;
+    border-radius: 8px;
+    outline: none;
+    background: transparent;
+    color: #000;
+    font-family: inherit;
+    font-size: 16px;
+}
+
+.md-textbox :is(label, span){
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  pointer-events: none;
+  color: #888888;
+  transition: 0.3s;
+}
+
+.md-textbox > label {
+  left: 10px;
+  translate: 0 -50%;
+  padding: 4px 8px;
+}
+
+.md-textbox > :is(input:focus, .has-value){
+  border-color: #198754;
+}
+
+.md-textbox > :is(input:focus, .has-value) ~ label{
+  background: #fff;
+  color: #198754;
+  translate: 0 -39px;
+}
+
+@media screen and (max-width: 350px) {
+  .md-textbox > input{
+    width: 100%;
+  }
+}
+
+
 .grid-container {
   display: grid;
   grid-template-columns: 15% 85%;
