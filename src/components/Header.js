@@ -1,20 +1,20 @@
 import React, {useState} from "react";
-import {FaBars} from "react-icons/fa";
-import Offcanvas from "react-bootstrap/Offcanvas";
-import Nav from "react-bootstrap/Nav";
-import {BiExit, BiNews, BiUserCircle, BiNew } from "react-icons/bi";
 import { BsNewspaper,  BsHeartFill, BsEnvelopeHeart, BsEar, BsPersonCircle, BsGear, BsBoxArrowRight} from "react-icons/bs"
-import {GiAcousticMegaphone, GiLoveLetter} from "react-icons/gi";
 import {Link} from "react-router-dom";
-
-export default function Header(){
-
+import {useNavigate} from "react-router-dom";
+const Header = ({logout}) =>{
+    const navigate = useNavigate();
     const [showNav, setShowNav] = useState(false);
 
     const handleCloseNav = () => setShowNav(false);
     const handleShowNav = () => {
         console.log('chamou!')
-        setShowNav(true);
+
+    }
+    const handleLogout = () => {
+        logout();
+        navigate('/');
+
     }
 
 
@@ -29,7 +29,7 @@ export default function Header(){
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
-          
+
           <div className="collapse navbar-collapse" id="navbarNavDropdown">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
@@ -39,9 +39,9 @@ export default function Header(){
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link active text-bg-success" href="rec.html">
+                <Link className="nav-link active text-bg-success" to={'/'}>
                   <BsEnvelopeHeart color="white"/>
-                  Recadinho</a>
+                  Recadinho</Link>
               </li>
               <li className="nav-item">
                 <a className="nav-link text-bg-success" href="fof.html">
@@ -51,7 +51,7 @@ export default function Header(){
             </ul>
             <div className="dropdown-center" style={{marginRight: 110}}>
               <button className="btn text-bg-success" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <BsPersonCircle color="white"/> 
+                  <BsPersonCircle color="white"/>
                   <ul className="dropdown-menu">
                     <li><a className="dropdown-item" href="#">
                         <BsPersonCircle color="white"/>
@@ -59,9 +59,9 @@ export default function Header(){
                     <li><a className="dropdown-item" href="#">
                       <BsGear color="white" />
                       Configurações</a></li>
-                    <li><a className="dropdown-item" href="#">
+                    <li onClick={handleLogout} className={'dropdown-item'}>
                       <BsBoxArrowRight color="white" />
-                      Sair</a></li>
+                      Sair</li>
                   </ul>
               </button>
             </div>
@@ -71,3 +71,5 @@ export default function Header(){
         </>
     )
 }
+
+export default Header;

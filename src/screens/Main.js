@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import Card from "react-bootstrap/Card";
-import { BiComment } from "react-icons/bi";
 import Modal from "react-bootstrap/Modal";
-import { BsNewspaper, BsHeart, BsChat, BsEnvelopeHeart, BsEar, BsPersonCircle, BsGear, BsBoxArrowRight } from "react-icons/bs"
+import { BsNewspaper, BsHeart, BsChat } from "react-icons/bs"
 import { MdSend } from "react-icons/md";
 import NoticiaStore from "../store/Store";
 import { observer } from "mobx-react";
-import { set } from "mobx";
 
 
 const store = new NoticiaStore()
@@ -15,6 +13,9 @@ export default observer(function Main() {
     const [show, setShow] = useState(false);
     const [indexNoticia, setIndexNoticia] = useState(0)
     const [cont, setCont] = useState(0)
+    useState(() => {
+        store.getNoticias();
+    }, [])
 
     const handleClose = () => setShow(false);
     const handleShow = (id) => {
@@ -33,12 +34,12 @@ export default observer(function Main() {
                 </h1>
             </div>
             {
-                store.noticias.map((item, index) => {
+                store.noticias?.map((item, index) => {
                     return (
                         <Card className="card mb-3 container-fluid" style={{ maxWidth: 1080, marginTop: 10 }}>
                             <Card.Body>
-                                <Card.Title>{item.titulo}</Card.Title>
-                                <Card.Text>{item.descricao}</Card.Text>
+                                <Card.Title>{item?.titulo}</Card.Title>
+                                <Card.Text>{item?.descricao}</Card.Text>
                                 <Card.Text><small className="text-body-secondary">Last updated 3 mins ago</small></Card.Text>
                             </Card.Body>
                             <div className="card-body">
@@ -57,7 +58,7 @@ export default observer(function Main() {
                                                 handleShow(index)
                                                 store.setNoticiaId(item.id)
                                             }} />
-                                        <span className="icon-label">{item.comentarios.length}</span>
+                                        <span className="icon-label">{item?.comentarios.length}</span>
                                     </div>
                                 </div>
                             </div>
@@ -94,7 +95,7 @@ export default observer(function Main() {
                     <Modal.Title className={'text-center'}>Comentários</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {store.noticias[indexNoticia].comentarios.map((comentario) => {
+                    {store.noticias[indexNoticia]?.comentarios.map((comentario) => {
                         return <p>{comentario.texto}</p>
                     })}
                     <input type={'text'} className={'form-text'} value={store.comentario.texto}
