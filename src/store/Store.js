@@ -1,25 +1,30 @@
 import api from "../service/Configuration";
 import {makeAutoObservable} from "mobx";
+import AuthStore from "./AuthStore";
 
 class NoticiaStore {
     noticias = []
     noticiaAtualId = {}
-    comentario = {texto:''}
+    comentario = {texto: ''}
 
     constructor() {
         makeAutoObservable(this);
-        this.getNoticias();
     }
 
     getNoticias() {
         api.get('noticias', {
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
+                'Authorization': 'Bearer ' + AuthStore.getToken
             }
         }).then((response) => {
             console.log(response.data)
             this.noticias = response.data
-        }).catch((erro) => console.log(erro))
+        }).catch((erro) => {
+                if (erro.response.status === 403) {
+                    AuthStore.logout();
+                }
+            }
+        )
 
     }
 
@@ -34,12 +39,21 @@ class NoticiaStore {
     }
 
     enviarComentario() {
-        api.post(`comentarios/${this.noticiaAtualId}`, this.comentario).then((response) => {
-            }).catch((erro) => console.log(erro)).finally(() => {
-                this.getNoticias();
-                this.comentario.texto = '';
-            })
-        }
+        api.post(`comentarios/${this.noticiaAtualId}`, this.comentario, {
+            headers: {
+                'Authorization': 'Bearer ' + AuthStore.getToken
+            }
+        }).then((response) => {
+        }).catch((erro) => {
+                if (erro.response.status === 403) {
+                    AuthStore.logout();
+                }
+            }
+        ).finally(() => {
+            this.getNoticias();
+            this.comentario.texto = '';
+        })
+    }
 
 }
 

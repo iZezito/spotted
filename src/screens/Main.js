@@ -6,7 +6,6 @@ import { MdSend } from "react-icons/md";
 import NoticiaStore from "../store/Store";
 import { observer } from "mobx-react";
 
-
 const store = new NoticiaStore()
 export default observer(function Main() {
 

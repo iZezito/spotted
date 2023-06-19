@@ -1,8 +1,8 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState } from "react";
 import { observer } from "mobx-react";
-import AuthStore from '../store/AuthStore';
-import { BiUser} from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import fundo from '../images/fundo.jpg'
+import AuthStore from "../store/AuthStore";
 
 const Acesso = observer(() => {
     const navigate = useNavigate();
@@ -16,13 +16,14 @@ const Acesso = observer(() => {
         console.log(username, password, loginSuccessful);
 
         if (loginSuccessful) {
+            console.log('Login realizado com sucesso!');
             navigate('/');
         }
     };
 
 
     return (
-        <div className="container position-absolute top-50 start-50 translate-middle bg-success">
+        <div className="container position-absolute top-50 start-50 translate-middle bg-success"  style={{backgroundImage: `url(${fundo})`}}>
             <div className="container" style={{marginTop: 45, marginBottom: 45}}>
                 <div className="row justify-content-center">
                     <div className="col-xl-4 col-md-6">

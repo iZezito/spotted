@@ -1,12 +1,18 @@
-import {makeAutoObservable} from 'mobx';
+import {action, makeAutoObservable, makeObservable, observable} from 'mobx';
 import api from "../service/Configuration";
 
 class AuthStore {
-    isAuthenticated = localStorage.getItem('token') !== null ? true : false;
+    isAuthenticated = false;
     token = null;
 
     constructor() {
-        makeAutoObservable(this);
+        makeObservable(this, {
+            isAuthenticated: observable,
+            token: observable,
+            login: action,
+            logout: action
+        });
+        this.isAuthenticated = localStorage.getItem('token') !== null;
     }
 
 

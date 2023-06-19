@@ -12,6 +12,7 @@ import Acesso from "./screens/Acesso";
 
 const App = observer(() => {
     const {isAuthenticated, logout} = AuthStore;
+    console.log(isAuthenticated);
 
     return (
         <Container fluid="auto">
