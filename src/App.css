@@ -52,6 +52,12 @@
   }
 }
 
+.resp:hover{
+    border-color: black;
+    border-bottom-width: 1px;
+}
+
+
 .comentario-texto,
 .resposta-texto {
     border-color: black;
@@ -72,6 +78,7 @@
 /*    white-space: nowrap;*/
 /*}*/
 .btn-responder{
+    margin-top: -20px;
     background-color: transparent;
     border: none;
     color: #007bff;
