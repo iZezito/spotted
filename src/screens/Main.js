@@ -16,6 +16,9 @@ export default observer(function Main() {
         store.getNoticias();
     }, [])
 
+    const handleResponder = () => {
+
+    }
     const handleClose = () => setShow(false);
     const handleShow = (id) => {
         setIndexNoticia(id)
@@ -35,7 +38,7 @@ export default observer(function Main() {
             {
                 store.noticias?.map((item, index) => {
                     return (
-                        <Card className="card mb-3 container-fluid" style={{ maxWidth: 1080, marginTop: 10 }}>
+                        <Card className="card mb-3 container-fluid" style={{ maxWidth: 1080, marginTop: 10 }} key={item.id}>
                             <Card.Body>
                                 <Card.Title>{item?.titulo}</Card.Title>
                                 <Card.Text>{item?.descricao}</Card.Text>
@@ -51,14 +54,15 @@ export default observer(function Main() {
                                         <span className="icon-label">{cont}</span>
 
                                     </div>
-                                    <div className="icon-container">
-                                        <BsChat color="green" className="icon" size={30} onClick={
-                                            () => {
-                                                handleShow(index)
-                                                store.setNoticiaId(item.id)
-                                            }} />
+                                    {item?.comentarios.length > 0 &&
+                                    <div className="icon-container" onClick={
+                                        () => {
+                                            handleShow(index)
+                                            store.setNoticiaId(item.id)
+                                        }}>
+                                        <BsChat color="green" className="icon" size={30}  />
                                         <span className="icon-label">{item?.comentarios.length}</span>
-                                    </div>
+                                    </div> }
                                 </div>
                             </div>
                         </Card>
@@ -95,9 +99,22 @@ export default observer(function Main() {
                 </Modal.Header>
                 <Modal.Body>
                     {store.noticias[indexNoticia]?.comentarios.map((comentario) => {
-                        return <p>{comentario.texto}</p>
+                        return (
+                            <div className={'container'} key={comentario.id}>
+                                <p className={'text-start comentario-texto ps-1'}>{comentario.texto}</p>
+                                <button className={'nav-link btn-responder'} onClick={() => handleResponder(comentario.id)}>Responder</button>
+                                {comentario?.respostas.length > 0 &&
+                                    comentario?.respostas.map((resposta) => {
+                                        return(
+                                            <p className={'text-start ms-5 resposta-texto ps-1'} key={resposta.id}>{resposta.texto}</p>
+                                        )
+                                    })
+
+                                }
+                            </div>
+                        )
                     })}
-                    <input type={'text'} className={'form-text'} value={store.comentario.texto}
+                    <input type={'text'} className={'form-text'} placeholder={'Digite seu comentário...'} value={store.comentario.texto}
                         onChange={(e) => store.setComentario(e.target.value)} />
 
                     <MdSend onClick={() => store.enviarComentario()}
