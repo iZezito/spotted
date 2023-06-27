@@ -4,12 +4,15 @@ import AuthStore from "./AuthStore";
 
 class NoticiaStore {
     noticias = []
+    user = null
     noticiaAtualId = {}
-    comentario = {texto: ''}
-    respostaComentario = {texto: ''}
+    comentario = {texto: '', autor: ''}
+    respostaComentario = {texto: '', autor: ''}
 
     constructor() {
+        this.user = localStorage.getItem('user');
         makeAutoObservable(this);
+
     }
 
     getNoticias() {
@@ -35,12 +38,16 @@ class NoticiaStore {
     setComentario(comentario) {
         console.log(comentario);
         this.comentario.texto = comentario;
+        this.comentario.autor = this.user;
         console.log(this.comentario.texto);
+        console.log(this.comentario.user);
     }
     setRespostaComentario(respostaComentario) {
         console.log(respostaComentario);
         this.respostaComentario.texto = respostaComentario;
+        this.respostaComentario.autor = this.user;
         console.log(this.respostaComentario.texto);
+        console.log(this.respostaComentario.user);
     }
 
     enviarComentario() {
@@ -74,6 +81,10 @@ class NoticiaStore {
             }
             console.log(erro);
         })
+    }
+
+    getUserName() {
+        return this.user;
     }
 
 }

@@ -57,6 +57,27 @@
     border-bottom-width: 1px;
 }
 
+.btn-icon {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.btn-delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+}
+.comentario-texto {
+    position: relative;
+}
 
 .comentario-texto,
 .resposta-texto {
