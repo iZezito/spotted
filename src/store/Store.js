@@ -3,6 +3,7 @@ import {makeAutoObservable} from "mobx";
 import AuthStore from "./AuthStore";
 
 class NoticiaStore {
+    loading = true
     noticias = []
     user = null
     noticiaAtualId = {}
@@ -21,6 +22,7 @@ class NoticiaStore {
                 'Authorization': 'Bearer ' + AuthStore.getToken
             }
         }).then((response) => {
+            this.loading = false
             console.log(response.data)
             this.noticias = response.data
         }).catch((erro) => {
