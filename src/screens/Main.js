@@ -24,6 +24,8 @@ export default observer(function Main() {
     const [placeholder, setPlaceholder] = useState(Array(5).fill(''))
     const [editingCommentId, setEditingCommentId] = useState(null);
     const [editedComment, setEditedComment] = useState('');
+    const [editingReplyId, setEditingReplyId] = useState(null);
+    const [editedReply, setEditedReply] = useState('');
 
     const handleVerRespostas = (commentId) => {
         if (expandedComments.includes(commentId)) {
@@ -121,26 +123,58 @@ export default observer(function Main() {
                 </Modal.Header>
                 <Modal.Body>
                     {store.noticias[indexNoticia]?.comentarios.map((comentario) => {
+                        const isReplyingToComment = editingCommentId === comentario.id;
                         return (
                             <div className={'container'} key={comentario.id}>
                                 <div className={'comentario-texto mt-2'}>
                                     <div className={'d-flex flex-row justify-content-between'}>
-                                        <p className={'text-start ps-1 coment'}>{comentario.texto}</p>
-                                        {comentario.autor === store.user && (
-                                            <div className={'d-flex flex-column'}>
+                                        {isReplyingToComment ? (
+                                            <>
+                                            <input
+                                                type={'text'}
+                                                className={'input-edit'}
+                                                style={{border: 'none', width: '80%'}}
+                                                value={store.comentarioEdit.texto}
+                                                onChange={(e) => store.setComentarioEdit(e.target.value)}
+                                            />
+                                                <button
+                                                    className={'btn-icon'}
+                                                    onClick={() => store.updateComentario(comentario.id)}
+                                                    disabled={!store.comentarioEdit.texto}>
+
+                                                    <MdSend
+
+                                                        style={{borderRadius: 20}} size={25}
+                                                        color={store.comentarioEdit.texto ? 'black' : 'gray'} className={'ms-1 mb-1'}/>
+                                                </button>
+                                            </>
+
+
+                                        ) : (
+                                            <>
+                                            <p className={'text-start ps-1 coment'}>{comentario.texto}</p>
+                                                {comentario.autor === store.user && (
+                                                    <div className={'d-flex flex-column'}>
                                                 <button className={'align-self-end ms-auto btn-delete'} type="button"
                                                         data-bs-toggle="dropdown" aria-expanded="false">
                                                     <BsThreeDotsVertical/>
                                                     <ul className="dropdown-menu">
-                                                        <li className="dropdown-item">Editar</li>
+                                                        <li className="dropdown-item" onClick={() => {
+                                                            setEditingCommentId(comentario.id);
+                                                            setEditedComment(comentario.texto);
+                                                            store.setComentarioEdit(comentario.texto)
+                                                        }}>Editar</li>
                                                         <li className="dropdown-item">Excluir</li>
                                                     </ul>
                                                 </button>
                                             </div>
+                                            )}
+                                            </>
                                         )}
 
+
                                     </div>
-                                    <>
+                                    { !isReplyingToComment && (
                                         <div className={'d-flex flex-row justify-content-end'}>
                                             <button className={'nav-link btn-responder ms-1 resp'}
                                                     onClick={() => setReplyingToCommentId(comentario.id)}>responder
@@ -151,28 +185,60 @@ export default observer(function Main() {
                                                     {expandedComments.includes(comentario.id) ? 'ocultar respostas' : 'ver respostas'}
                                                 </button>)}
                                         </div>
-                                    </>
-
+                                    )}
                                 </div>
 
                                 {comentario?.respostas.length > 0 && expandedComments.includes(comentario.id) &&
                                     comentario?.respostas.map((resposta) => {
+                                        const isReplyingToResponse = editingReplyId === resposta.id;
+
                                         return (
                                             <div className={'resposta-texto ms-5 mt-2 ps-1'}>
                                                 <div key={resposta.id}
                                                      className={'d-flex flex-row justify-content-between'}>
+                                                    {isReplyingToResponse ? (
+                                                        <>
+                                                            <input
+                                                                type={'text'}
+                                                                className={'input-edit'}
+                                                                style={{border: 'none', width: '80%'}}
+                                                                value={store.respostaEdit.texto}
+                                                                onChange={(e) => store.setRespostaEdit(e.target.value)}
+                                                            />
+                                                            <button
+                                                                className={'btn-icon'}
+                                                                onClick={() => store.updateResposta(resposta.id)}
+                                                                disabled={!store.respostaEdit.texto}>
+                                                                <MdSend
+                                                                    style={{borderRadius: 20}} size={25}
+                                                                    color={store.respostaEdit.texto ? 'black' : 'gray'} className={'ms-1 mb-1'}/>
+                                                            </button>
+                                                        </>
+                                                    ) : (
+                                                        <>
                                                     <p className={'text-start'}>{resposta.texto}</p>
-                                                    <div className={'d-flex flex-column'}>
-                                                        <button className={'align-self-end ms-auto btn-delete'}
-                                                                type="button" data-bs-toggle="dropdown"
-                                                                aria-expanded="false">
-                                                            <BsThreeDotsVertical/>
-                                                            <ul className="dropdown-menu">
-                                                                <li className="dropdown-item">Editar</li>
-                                                                <li className="dropdown-item">Excluir</li>
-                                                            </ul>
-                                                        </button>
-                                                    </div>
+                                                    {resposta.autor === store.user && (
+                                                        <div className={'d-flex flex-column'}>
+                                                            <button className={'align-self-end ms-auto btn-delete'}
+                                                                    type="button" data-bs-toggle="dropdown"
+                                                                    aria-expanded="false">
+                                                                <BsThreeDotsVertical/>
+                                                                <ul className="dropdown-menu">
+                                                                    <li className="dropdown-item"
+                                                                    onClick={() => {
+                                                                        setEditingReplyId(resposta.id);
+                                                                        setEditedReply(resposta.texto);
+                                                                        store.setRespostaEdit(resposta.texto)
+                                                                    }}
+                                                                    >Editar</li>
+                                                                    <li className="dropdown-item">Excluir</li>
+                                                                </ul>
+                                                            </button>
+                                                        </div>
+                                                    )}
+                                                        </>
+                                                    )}
+
                                                 </div>
                                             </div>
                                         );

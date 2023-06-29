@@ -116,6 +116,11 @@
     word-wrap: break-word;
 }
 
+.input-edit:focus{
+    outline: none;
+    width:80%;
+}
+
 .resposta{
     overflow: hidden;
     white-space: pre-wrap;

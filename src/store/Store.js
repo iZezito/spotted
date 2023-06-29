@@ -1,8 +1,13 @@
 import api from "../service/Configuration";
 import {makeAutoObservable} from "mobx";
 import AuthStore from "./AuthStore";
+import {type} from "@testing-library/user-event/dist/type";
+import {string} from "sockjs-client/lib/utils/random";
+import data from "bootstrap/js/src/dom/data";
 
 class NoticiaStore {
+    comentarioEdit = {autor: '', texto: ''}
+    respostaEdit = {autor: '', texto: ''}
     loading = true
     noticias = []
     user = null
@@ -11,8 +16,8 @@ class NoticiaStore {
     respostaComentario = {texto: '', autor: ''}
 
     constructor() {
-        this.user = localStorage.getItem('user');
         makeAutoObservable(this);
+        this.user = localStorage.getItem('user');
 
     }
 
@@ -35,6 +40,49 @@ class NoticiaStore {
 
     setNoticiaId(noticiaId) {
         this.noticiaAtualId = noticiaId;
+    }
+
+    setComentarioEdit(comentario) {
+        console.log(comentario);
+        this.comentarioEdit.texto = comentario;
+        console.log(typeof (this.comentarioEdit))
+    }
+
+    setRespostaEdit(respostaComentario) {
+        console.log(respostaComentario);
+        this.respostaEdit.texto = respostaComentario;
+        console.log(typeof (this.respostaComentarioEdit))
+    }
+
+    updateResposta(respostaComentarioId) {
+        api.patch(`respostas/${respostaComentarioId}`, this.respostaEdit, {
+            headers: {
+                'Authorization': 'Bearer ' + AuthStore.getToken
+            }
+        }).then((response) => {
+            console.log(response.data);
+            this.respostaComentarioEdit.texto = '';
+        }).catch((erro) => {
+            console.log(erro);
+            if (erro.response.status === 403) {
+                AuthStore.logout();
+            }
+        })
+    }
+    updateComentario(comentarioId) {
+        api.patch(`comentarios/${comentarioId}`, this.comentarioEdit, {
+            headers: {
+                'Authorization': 'Bearer ' + AuthStore.getToken
+            }
+        }).then((response) => {
+            console.log(response.data);
+            this.comentarioEdit.texto = '';
+        }).catch((erro) => {
+            console.log(erro);
+            if (erro.response.status === 403) {
+                AuthStore.logout();
+            }
+        })
     }
 
     setComentario(comentario) {
