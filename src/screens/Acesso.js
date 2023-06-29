@@ -23,7 +23,7 @@ const Acesso = observer(() => {
 
 
     return (
-        <div className="container position-absolute top-50 start-50 translate-middle bg-success"  style={{backgroundImage: `url(${fundo})`}}>
+        <div className="container position-absolute top-50 start-50 translate-middle bg-success" >
             <div className="container" style={{marginTop: 45, marginBottom: 45}}>
                 <div className="row justify-content-center">
                     <div className="col-xl-4 col-md-6">

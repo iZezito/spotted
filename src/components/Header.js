@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import { Navbar, Nav, NavDropdown, Dropdown } from 'react-bootstrap';
 import { BsNewspaper,  BsHeartFill, BsEnvelopeHeart, BsEar, BsPersonCircle, BsGear, BsBoxArrowRight} from "react-icons/bs"
 import {Link} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
@@ -20,54 +21,48 @@ const Header = ({logout}) =>{
 
     return (
         <>
-            <nav className="navbar navbar-expand-lg fixed-top bg-success">
-        <div className="container-fluid">
-          <a className="navbar-brand text-bg-success" href="index.html">
+        <Navbar bg="success" expand="lg" fixed="top">
+          <Navbar.Brand className="text-bg-success">
             SpottedAgro
-            <BsHeartFill color="white"/>
-         </a>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-
-          <div className="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <a className="nav-link active text-bg-success" href="index.html">
-                  <BsNewspaper color="white"/>
-                  Notícias
-                </a>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link active text-bg-success" to={'/'}>
-                  <BsEnvelopeHeart color="white"/>
-                  Recadinho</Link>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link text-bg-success" href="fof.html">
-                  <BsEar color="white"/>
-                  Fofoca</a>
-              </li>
-            </ul>
-            <div className="dropdown-center" style={{marginRight: 110}}>
-              <button className="btn text-bg-success" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <BsPersonCircle color="white"/>
-                  <ul className="dropdown-menu">
-                    <li><a className="dropdown-item" href="#">
-                        <BsPersonCircle color="white"/>
-                        Perfil</a></li>
-                    <li><a className="dropdown-item" href="#">
-                      <BsGear color="white" />
-                      Configurações</a></li>
-                    <li onClick={handleLogout} className={'dropdown-item'}>
-                      <BsBoxArrowRight color="white" />
-                      Sair</li>
-                  </ul>
-              </button>
-            </div>
-          </div>
-        </div>
-    </nav>
+            <BsHeartFill color="white" />
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="navbarNavDropdown" />
+          <Navbar.Collapse id="navbarNavDropdown">
+            <Nav className="me-auto mb-2 mb-lg-0">
+              <Nav.Link as={Link} to="/" className="text-bg-success">
+                <BsNewspaper color="white" />
+                Notícias
+              </Nav.Link>
+              <Nav.Link as={Link} to="/" className="text-bg-success">
+                <BsEnvelopeHeart color="white" />
+                Recadinho
+              </Nav.Link>
+              <Nav.Link as={Link} to="/" className="text-bg-success">
+                <BsEar color="white" />
+                Fofoca
+              </Nav.Link>
+            </Nav>
+            <Dropdown as={Nav.Item} className="dropdown-center" style={{ marginRight: 110 }}>
+              <Dropdown.Toggle as={Nav.Link} id="dropdown-basic" className="text-bg-success">
+                <BsPersonCircle color="white" />
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item>
+                  <BsPersonCircle color="white" />
+                  <span>Perfil</span>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <BsGear color="white" />
+                  <span>Configurações</span>
+                </Dropdown.Item>
+                <Dropdown.Item onClick={handleLogout}>
+                  <BsBoxArrowRight color="white" />
+                  <span>Sair</span>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Navbar.Collapse>
+        </Navbar>
         </>
     )
 }

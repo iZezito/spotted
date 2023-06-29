@@ -82,7 +82,7 @@ export default observer(function Main() {
                     ) : (
                         <>
                             {store.noticias?.map((item, index) => (
-                                <Card className="card mb-3 container-fluid" style={{maxWidth: 1080, marginTop: 10}}
+                                <Card className="container" style={{maxWidth: 1080, marginTop: 10}}
                                       key={item.id}>
                                     <Card.Body>
                                         <Card.Title>{item?.titulo}</Card.Title>
@@ -91,10 +91,9 @@ export default observer(function Main() {
                                             <small className="text-body-secondary">Last updated 3 mins ago</small>
                                         </Card.Text>
                                     </Card.Body>
-                                    <div className="card-body"></div>
-                                    <div className="card-footer">
-                                        <div className="gap-2 d-md-flex justify-content-md-end">
-                                            <div className="icon-container" style={{marginTop: 2}}>
+                                    <Card.Footer>
+                                        <div className="d-md-flex justify-content-md-end">
+                                            <div className="icon-container" style={{marginTop: 3}}>
                                                 <BsHeart color="red" size={30}/>
                                                 <span className="icon-label">{0}</span>
                                             </div>
@@ -106,7 +105,7 @@ export default observer(function Main() {
                                                 <span className="icon-label">{item?.comentarios.length}</span>
                                             </div>
                                         </div>
-                                    </div>
+                                    </Card.Footer>
                                 </Card>
                             ))}
                         </>
