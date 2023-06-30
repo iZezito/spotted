@@ -13,6 +13,10 @@ import {
 import {MdSend} from "react-icons/md";
 import NoticiaStore from "../store/Store";
 import {observer} from "mobx-react";
+import Toast from 'react-bootstrap/Toast';
+import ToastContainer from 'react-bootstrap/ToastContainer';
+import Button from "react-bootstrap/Button";
+
 
 const store = new NoticiaStore()
 export default observer(function Main() {
@@ -24,8 +28,12 @@ export default observer(function Main() {
     const [placeholder, setPlaceholder] = useState(Array(5).fill(''))
     const [editingCommentId, setEditingCommentId] = useState(null);
     const [editedComment, setEditedComment] = useState('');
-    const [editingReplyId, setEditingReplyId] = useState(null);
+    const [editingReplyId, setEditingReplyId] = useState(0);
     const [editedReply, setEditedReply] = useState('');
+    const [smShow, setSmShow] = useState(false);
+
+
+
 
     const handleVerRespostas = (commentId) => {
         if (expandedComments.includes(commentId)) {
@@ -34,6 +42,11 @@ export default observer(function Main() {
             setExpandedComments([...expandedComments, commentId]);
         }
     };
+
+    const handleDeleteRespostaComentario = () => {
+        setSmShow(false)
+        store.deleteRespostaComentario()
+    }
 
     useState(() => {
         store.getNoticias();
@@ -57,6 +70,19 @@ export default observer(function Main() {
                     Notícias
                 </h1>
             </div>
+            {/*<Toast show={showToast}>*/}
+            {/*    <Toast.Header>*/}
+            {/*        <img*/}
+            {/*            src="holder.js/20x20?text=%20"*/}
+            {/*            className="rounded me-2"*/}
+            {/*            alt=""*/}
+            {/*        />*/}
+            {/*        <strong className="me-auto">Bootstrap</strong>*/}
+            {/*        <small>11 mins ago</small>*/}
+            {/*    </Toast.Header>*/}
+            {/*    <Toast.Body>Woohoo, you're reading this text in a Toast!</Toast.Body>*/}
+            {/*</Toast>*/}
+
             {store.loading ? (
                 <>
                     {placeholder.map((e, i) => (
@@ -164,7 +190,12 @@ export default observer(function Main() {
                                                             setEditedComment(comentario.texto);
                                                             store.setComentarioEdit(comentario.texto)
                                                         }}>Editar</li>
-                                                        <li className="dropdown-item">Excluir</li>
+                                                        <li className="dropdown-item" onClick={() => {
+                                                            setSmShow(true)
+                                                            setShow(false)
+                                                            store.setComentarioDeleteId(comentario.id)
+                                                            store.setRespostaDeleteId(null)
+                                                        }}>Excluir</li>
                                                     </ul>
                                                 </button>
                                             </div>
@@ -231,7 +262,14 @@ export default observer(function Main() {
                                                                         store.setRespostaEdit(resposta.texto)
                                                                     }}
                                                                     >Editar</li>
-                                                                    <li className="dropdown-item">Excluir</li>
+                                                                    <li className="dropdown-item"
+                                                                    onClick={() => {
+                                                                        setSmShow(true)
+                                                                        setShow(false)
+                                                                        store.setRespostaDeleteId(resposta.id)
+                                                                        store.setComentarioDeleteId(null)
+                                                                    }}
+                                                                    >Excluir</li>
                                                                 </ul>
                                                             </button>
                                                         </div>
@@ -281,6 +319,31 @@ export default observer(function Main() {
                             color={store.comentario.texto ? 'black' : 'gray'} className={'ms-1 mb-1'}/>
                     </button>
                 </Modal.Body>
+            </Modal>
+            <Modal
+                size="sm"
+                show={smShow}
+                onHide={() => {
+                    setSmShow(false)
+                    setShow(true)
+                }}
+                aria-labelledby="example-modal-sizes-title-sm"
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="example-modal-sizes-title-sm">
+                        Excluir {store.respostaDeleteId ? 'Resposta' : 'Comentário'}?
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Tem certeza que deseja excluir {store.respostaDeleteId ? 'este comentário' : 'esta resposta'}?
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => {
+                        setSmShow(false)
+                        setShow(true)
+                    }}>Cancelar</Button>
+                    <Button variant="danger" onClick={handleDeleteRespostaComentario}>Excluir</Button>
+                </Modal.Footer>
             </Modal>
 
         </div>

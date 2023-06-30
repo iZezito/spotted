@@ -11,6 +11,8 @@ class NoticiaStore {
     loading = true
     noticias = []
     user = null
+    comentarioDeleteId = null
+    respostaDeleteId = null
     noticiaAtualId = {}
     comentario = {texto: '', autor: ''}
     respostaComentario = {texto: '', autor: ''}
@@ -52,6 +54,36 @@ class NoticiaStore {
         console.log(respostaComentario);
         this.respostaEdit.texto = respostaComentario;
         console.log(typeof (this.respostaComentarioEdit))
+    }
+
+    setComentarioDeleteId(comentarioId) {
+        this.comentarioDeleteId = comentarioId;
+    }
+
+    setRespostaDeleteId(respostaId) {
+        this.respostaDeleteId = respostaId;
+    }
+
+    deleteRespostaComentario() {
+        api.delete(`${this.respostaDeleteId ? 'respostas' : 'comentarios'}/${this.respostaDeleteId ? this.respostaDeleteId : this.comentarioDeleteId}/${this.noticiaAtualId}`, {
+            headers: {
+                'Authorization': 'Bearer ' + AuthStore.getToken
+            }
+        }).then((response) => {
+            if(this.respostaDeleteId){
+                this.noticias[this.noticiaAtualId].respostas = this.noticias[this.noticiaAtualId].respostas.filter((resposta) => resposta.id !== this.respostaDeleteId);
+            } else {
+                this.noticias[this.noticiaAtualId].comentarios = this.noticias[this.noticiaAtualId].comentarios.filter((comentario) => comentario.id !== this.comentarioDeleteId);
+            }
+            console.log(response.data);
+            this.respostaDeleteId = null;
+            this.comentarioDeleteId = null;
+        }).catch((erro) => {
+            console.log(erro);
+            if (erro.response.status === 403) {
+                AuthStore.logout();
+            }
+        })
     }
 
     updateResposta(respostaComentarioId) {
@@ -106,7 +138,8 @@ class NoticiaStore {
                 'Authorization': 'Bearer ' + AuthStore.getToken
             }
         }).then((response) => {
-
+            console.log(response.data);
+            this.comentario.texto = '';
         }).catch((erro) => {
             if (erro.response.status === 403) {
                 AuthStore.logout();
