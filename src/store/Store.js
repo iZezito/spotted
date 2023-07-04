@@ -1,9 +1,6 @@
 import api from "../service/Configuration";
 import {makeAutoObservable} from "mobx";
 import AuthStore from "./AuthStore";
-import {type} from "@testing-library/user-event/dist/type";
-import {string} from "sockjs-client/lib/utils/random";
-import data from "bootstrap/js/src/dom/data";
 
 class NoticiaStore {
     comentarioEdit = {autor: '', texto: ''}
@@ -65,7 +62,7 @@ class NoticiaStore {
     }
 
     deleteRespostaComentario() {
-        api.delete(`${this.respostaDeleteId ? 'respostas' : 'comentarios'}/${this.respostaDeleteId ? this.respostaDeleteId : this.comentarioDeleteId}/${this.noticiaAtualId}`, {
+        api.delete(`${this.respostaDeleteId ? 'respostas' : 'comentarios'}/${this.respostaDeleteId ? this.respostaDeleteId : this.comentarioDeleteId}/${ this.respostaDeleteId && this.comentarioDeleteId ? this.comentarioDeleteId : this.noticiaAtualId }`, {
             headers: {
                 'Authorization': 'Bearer ' + AuthStore.getToken
             }
@@ -139,6 +136,7 @@ class NoticiaStore {
             }
         }).then((response) => {
             console.log(response.data);
+            this.noticias[this.noticias.findIndex(noticia => noticia.id === this.noticiaAtualId)].comentarios.push(response.data);
             this.comentario.texto = '';
         }).catch((erro) => {
             if (erro.response.status === 403) {
@@ -155,8 +153,8 @@ class NoticiaStore {
                 'Authorization': 'Bearer ' + AuthStore.getToken
             }
         }).then((response) => {
-            this.noticias[this.noticias.findIndex(noticia => noticia.id === this.noticiaAtualId)].comentarios[this.noticias[this.noticias.findIndex(noticia => noticia.id === this.noticiaAtualId)].comentarios.findIndex(comentario => comentario.id === comentarioId)].respostas.push(response.data);
             console.log(response.data);
+            this.noticias[this.noticias.findIndex(noticia => noticia.id === this.noticiaAtualId)].comentarios[this.noticias[this.noticias.findIndex(noticia => noticia.id === this.noticiaAtualId)].comentarios.findIndex(comentario => comentario.id === comentarioId)].respostas.push(response.data);
             this.respostaComentario.texto = '';
         }).catch((erro) => {
             if (erro.response.status === 403) {

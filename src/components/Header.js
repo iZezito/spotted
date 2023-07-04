@@ -4,13 +4,6 @@ import {Link} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
 const Header = ({logout}) =>{
     const navigate = useNavigate();
-    const [showNav, setShowNav] = useState(false);
-
-    const handleCloseNav = () => setShowNav(false);
-    const handleShowNav = () => {
-        console.log('chamou!')
-
-    }
     const handleLogout = () => {
         logout();
         navigate('/');
@@ -22,9 +15,9 @@ const Header = ({logout}) =>{
         <>
             <nav className="navbar navbar-expand-lg fixed-top bg-success">
         <div className="container-fluid">
-          <a className="navbar-brand text-bg-success" href="index.html">
+          <a className="navbar-brand text-bg-success pe-2" href="index.html">
             SpottedAgro
-            <BsHeartFill color="white"/>
+            <BsHeartFill color="white" className={'ps-2'} size={25}/>
          </a>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>

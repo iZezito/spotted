@@ -164,6 +164,11 @@ export default observer(function Main() {
                                                 onChange={(e) => store.setComentarioEdit(e.target.value)}
                                             />
                                                 <button
+                                                    onClick={() => setEditingCommentId(null)}
+                                                    className={'btn-icon text-danger'}>
+                                                    cancelar
+                                                </button>
+                                                <button
                                                     className={'btn-icon'}
                                                     onClick={() => store.updateComentario(comentario.id)}
                                                     disabled={!store.comentarioEdit.texto}>
@@ -210,7 +215,7 @@ export default observer(function Main() {
                                             <button className={'nav-link btn-responder ms-1 resp'}
                                                     onClick={() => setReplyingToCommentId(comentario.id)}>responder
                                             </button>
-                                            {comentario?.respostas.length > 0 && (
+                                            {comentario?.respostas?.length > 0 && (
                                                 <button className={'nav-link btn-responder ms-1 resp'}
                                                         onClick={() => handleVerRespostas(comentario.id)}>
                                                     {expandedComments.includes(comentario.id) ? 'ocultar respostas' : 'ver respostas'}
@@ -219,7 +224,7 @@ export default observer(function Main() {
                                     )}
                                 </div>
 
-                                {comentario?.respostas.length > 0 && expandedComments.includes(comentario.id) &&
+                                {comentario?.respostas?.length > 0 && expandedComments.includes(comentario.id) &&
                                     comentario?.respostas.map((resposta) => {
                                         const isReplyingToResponse = editingReplyId === resposta.id;
 
@@ -236,6 +241,12 @@ export default observer(function Main() {
                                                                 value={store.respostaEdit.texto}
                                                                 onChange={(e) => store.setRespostaEdit(e.target.value)}
                                                             />
+                                                            <button
+                                                                onClick={() => setEditingReplyId(null)}
+                                                                className={'btn-icon'}>
+                                                                cancelar
+                                                            </button>
+
                                                             <button
                                                                 className={'btn-icon'}
                                                                 onClick={() => store.updateResposta(resposta.id)}
@@ -267,7 +278,7 @@ export default observer(function Main() {
                                                                         setSmShow(true)
                                                                         setShow(false)
                                                                         store.setRespostaDeleteId(resposta.id)
-                                                                        store.setComentarioDeleteId(null)
+                                                                        store.setComentarioDeleteId(comentario.id)
                                                                     }}
                                                                     >Excluir</li>
                                                                 </ul>
