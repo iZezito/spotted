@@ -157,6 +157,7 @@ class NoticiaStore {
             this.noticias[this.noticias.findIndex(noticia => noticia.id === this.noticiaAtualId)].comentarios[this.noticias[this.noticias.findIndex(noticia => noticia.id === this.noticiaAtualId)].comentarios.findIndex(comentario => comentario.id === comentarioId)].respostas.push(response.data);
             this.respostaComentario.texto = '';
         }).catch((erro) => {
+            console.log('Consolezada:', erro);
             if (erro.response.status === 403) {
                 AuthStore.logout();
             }
