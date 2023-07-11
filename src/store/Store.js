@@ -1,5 +1,5 @@
 import api from "../service/Configuration";
-import {makeAutoObservable} from "mobx";
+import {makeAutoObservable, toJS} from "mobx";
 import AuthStore from "./AuthStore";
 
 class NoticiaStore {
@@ -13,7 +13,7 @@ class NoticiaStore {
     noticiaAtualId = {}
     comentario = {texto: '', autor: ''}
     respostaComentario = {texto: '', autor: ''}
-    noticia = {titulo: '', texto: ''}
+    noticia = {titulo: '', descricao: '', comentarios:[]}
 
     constructor() {
         makeAutoObservable(this);
@@ -152,8 +152,8 @@ class NoticiaStore {
         console.log(this.noticia.titulo);
     }
     setTextoNoticia(noticia) {
-        this.noticia.texto = noticia;
-        console.log(this.noticia.texto);
+        this.noticia.descricao = noticia;
+        console.log(this.noticia.descricao);
         console.log(this.noticia);
     }
 
@@ -194,7 +194,7 @@ class NoticiaStore {
         })
     }
     enviarNoticia() {
-        api.post('noticias/', this.noticia.toJSON(), {
+        api.post('noticias',this.noticia, {
             headers: {
                 'Authorization': 'Bearer ' + AuthStore.getToken
             }

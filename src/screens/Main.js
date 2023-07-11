@@ -44,6 +44,11 @@ export default observer(function Main() {
         }
     };
 
+    const handleEnviarNoticia = () => {
+        setShowModalNoticia(false);
+        store.enviarNoticia()
+    }
+
     const handleDeleteRespostaComentario = () => {
         setSmShow(false);
         setShow(true);
@@ -76,7 +81,7 @@ export default observer(function Main() {
             </div>
             <div className="container d-flex justify-content-center">
                 <div className="row" onClick={handleShowModalNoticia}>
-                    <input type="text" className="form-control" placeholder="Qual o desmantelo de hoje?" style={{maxWidth: 1000}} disabled={true}/>
+                    <input type="text" className="form-control" placeholder="Qual o desmantelo de hoje?" disabled={true}/>
                 </div>
             </div>
             {/*<Toast show={showToast}>*/}
@@ -373,7 +378,7 @@ export default observer(function Main() {
                     <Form>
                         <Form.Group controlId="message-text">
                             <Form.Label>Texto:</Form.Label>
-                            <Form.Control as="textarea" onChange={(e) => store.setTextoNoticia(e.target.value)} rows={3} value={store.noticia.texto}/>
+                            <Form.Control as="textarea" onChange={(e) => store.setTextoNoticia(e.target.value)} rows={3} value={store.noticia.descricao}/>
                         </Form.Group>
                         <Form.Group controlId="message-text">
                             <Form.Label>Título:</Form.Label>
@@ -385,7 +390,7 @@ export default observer(function Main() {
                     <Button variant="danger" onClick={handleCloseModalNoticia}>
                         Cancelar
                     </Button>
-                    <Button variant="primary" onClick={store.enviarNoticia}>
+                    <Button variant="primary" onClick={handleEnviarNoticia}>
                         Publicar
                     </Button>
                 </Modal.Footer>

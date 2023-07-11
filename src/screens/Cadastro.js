@@ -65,7 +65,7 @@ const Cadastro = observer(() => {
     }
 
     const isValido = () => {
-        return !(erros.login || erros.senha || erros.confirmarSenha);
+        return !(erros.login || erros.senha || erros.confirmarSenha || store.usuario.matricula === '');
 
     }
 

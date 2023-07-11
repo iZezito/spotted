@@ -34,7 +34,7 @@ class CadastroStore {
                     console.log(response.data);
                     this.avisoMatricula = response.data;
                     this.arquivo = file;
-                    if(response.data === 'Matricula válida') {
+                    if(response.data.includes('Matrícula válida')) {
                         this.usuario.matricula = file.name.split('/')[1];
                     }
                 })
