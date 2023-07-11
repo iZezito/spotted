@@ -76,7 +76,7 @@ export default observer(function Main() {
             </div>
             <div className="container d-flex justify-content-center">
                 <div className="row" onClick={handleShowModalNoticia}>
-                    <input type="text" className="form-control" placeholder="Qual o desmantelo de hoje?" style={{width: 1000}} disabled={true}/>
+                    <input type="text" className="form-control" placeholder="Qual o desmantelo de hoje?" style={{maxWidth: 1000}} disabled={true}/>
                 </div>
             </div>
             {/*<Toast show={showToast}>*/}
@@ -365,26 +365,27 @@ export default observer(function Main() {
                     <Button variant="danger" onClick={handleDeleteRespostaComentario}>Excluir</Button>
                 </Modal.Footer>
             </Modal>
-            <Modal show={show} onHide={handleClose} id="exampleModal1">
+            <Modal show={showModalNoticia} onHide={handleCloseModalNoticia} id="exampleModalnoticia">
                 <Modal.Header closeButton>
                     <Modal.Title className="fs-5">Nova notícia</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
-                        <Form.Group controlId="recipient-name">
-                            <Form.Control type="file" />
-                        </Form.Group>
                         <Form.Group controlId="message-text">
                             <Form.Label>Texto:</Form.Label>
-                            <Form.Control as="textarea" rows={3} />
+                            <Form.Control as="textarea" onChange={(e) => store.setTextoNoticia(e.target.value)} rows={3} value={store.noticia.texto}/>
+                        </Form.Group>
+                        <Form.Group controlId="message-text">
+                            <Form.Label>Título:</Form.Label>
+                            <Form.Control as="textarea" onChange={(e) => store.setTituloNoticia(e.target.value)} rows={3} value={store.noticia.titulo} />
                         </Form.Group>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="danger" onClick={handleClose}>
+                    <Button variant="danger" onClick={handleCloseModalNoticia}>
                         Cancelar
                     </Button>
-                    <Button variant="primary">
+                    <Button variant="primary" onClick={store.enviarNoticia}>
                         Publicar
                     </Button>
                 </Modal.Footer>

@@ -13,6 +13,7 @@ class NoticiaStore {
     noticiaAtualId = {}
     comentario = {texto: '', autor: ''}
     respostaComentario = {texto: '', autor: ''}
+    noticia = {titulo: '', texto: ''}
 
     constructor() {
         makeAutoObservable(this);
@@ -146,6 +147,17 @@ class NoticiaStore {
         console.log(this.respostaComentario.user);
     }
 
+    setTituloNoticia(noticia) {
+        this.noticia.titulo = noticia;
+        console.log(this.noticia.titulo);
+    }
+    setTextoNoticia(noticia) {
+        this.noticia.texto = noticia;
+        console.log(this.noticia.texto);
+        console.log(this.noticia);
+    }
+
+
     enviarComentario() {
         api.post(`comentarios/${this.noticiaAtualId}`, this.comentario, {
             headers: {
@@ -179,6 +191,23 @@ class NoticiaStore {
                 AuthStore.logout();
             }
             console.log(erro);
+        })
+    }
+    enviarNoticia() {
+        api.post('noticias/', this.noticia.toJSON(), {
+            headers: {
+                'Authorization': 'Bearer ' + AuthStore.getToken
+            }
+        }).then((response) => {
+            console.log(response.data);
+            this.noticias.push(response.data);
+            this.noticia.titulo = '';
+            this.noticia.texto = '';
+        }).catch((erro) => {
+            console.log(erro);
+            if (erro.response.status === 403) {
+                AuthStore.logout();
+            }
         })
     }
 

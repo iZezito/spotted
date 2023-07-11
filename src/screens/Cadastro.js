@@ -99,7 +99,7 @@ const Cadastro = observer(() => {
                                            aria-describedby="emailHelp" value={store.usuario.login}
                                            onChange={(e) => handleChangeLogin(e)}/>
                                     {erros.login && <span className="text-danger">{erros.login}</span>}
-                                    {store.avisoLogin.contains('válido') ? <span className="text-success">{store.avisoLogin}</span> : <span className="text-danger">{store.avisoLogin}</span>}
+                                    {store.avisoLogin.includes('válido') ? <span className="text-success">{store.avisoLogin}</span> : <span className="text-danger">{store.avisoLogin}</span>}
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="exampleInputPassword1" className="form-label">Senha</label>

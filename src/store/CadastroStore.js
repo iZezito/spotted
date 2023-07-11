@@ -6,6 +6,7 @@ class CadastroStore {
         avisoMatricula = '';
         avisoLogin = '';
         usuario = {login: '', senha: '', matricula: ''};
+        arquivo = null;
 
         constructor() {
             makeAutoObservable(this);
@@ -32,6 +33,10 @@ class CadastroStore {
                 .then(response => {
                     console.log(response.data);
                     this.avisoMatricula = response.data;
+                    this.arquivo = file;
+                    if(response.data === 'Matricula válida') {
+                        this.usuario.matricula = file.name.split('/')[1];
+                    }
                 })
                 .catch(error => {
                     console.error(error);
