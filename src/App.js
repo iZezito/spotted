@@ -8,6 +8,7 @@ import {Routes, Route} from "react-router-dom";
 import AuthStore from './store/AuthStore';
 import { observer } from "mobx-react";
 import Acesso from "./screens/Acesso";
+import Cadastro from "./screens/Cadastro";
 
 
 const App = observer(() => {
@@ -19,6 +20,7 @@ const App = observer(() => {
 
             {isAuthenticated && <Header logout={logout} />}
             <Routes>
+                {!isAuthenticated && <Route path="/cadastro" element={<Cadastro />}/>}
                 {isAuthenticated && <Route exact path="/" element={<Main/>}/>}
                 {isAuthenticated && <Route path={"*"} element={<NotFoundPage/>}/>}
                 {!isAuthenticated && <Route path={"*"} element={<Acesso />}/>}

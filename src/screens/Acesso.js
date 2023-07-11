@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { observer } from "mobx-react";
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import fundo from '../images/fundo.jpg'
 import AuthStore from "../store/AuthStore";
 
@@ -70,9 +70,7 @@ const Acesso = observer(() => {
                                         <label htmlFor={'senha'}>Senha</label>
                                     </div>
                                     <div className="mb-3 form-check">
-                                        <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
-                                            <label className="form-check-label" htmlFor="exampleCheck1">Lembre-se de
-                                                mim</label>
+                                        <Link to={'/cadastro'} style={{textDecoration: 'none'}}>Cadastre-se</Link>
                                             <button type={'submit'} className="btn btn-success ms-3">Entrar
                                             </button>
                                     </div>

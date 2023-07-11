@@ -67,10 +67,27 @@ class NoticiaStore {
                 'Authorization': 'Bearer ' + AuthStore.getToken
             }
         }).then((response) => {
-            if(this.respostaDeleteId){
-                this.noticias[this.noticiaAtualId].respostas = this.noticias[this.noticiaAtualId].respostas.filter((resposta) => resposta.id !== this.respostaDeleteId);
-            } else {
-                this.noticias[this.noticiaAtualId].comentarios = this.noticias[this.noticiaAtualId].comentarios.filter((comentario) => comentario.id !== this.comentarioDeleteId);
+            if (this.respostaDeleteId && this.comentarioDeleteId) {
+                this.noticias.forEach((noticia) => {
+                    if (noticia.id === this.noticiaAtualId) {
+                        noticia.comentarios.forEach((comentario) => {
+                            if (comentario.id === this.comentarioDeleteId) {
+                                comentario.respostas = comentario.respostas.filter((resposta) => {
+                                    return resposta.id !== this.respostaDeleteId
+                                })
+                            }
+                        })
+                    }
+                })
+
+            } else if (this.comentarioDeleteId) {
+                this.noticias.forEach((noticia) => {
+                    if (noticia.id === this.noticiaAtualId) {
+                        noticia.comentarios = noticia.comentarios.filter((comentario) => {
+                            return comentario.id !== this.comentarioDeleteId
+                        })
+                    }
+                })
             }
             console.log(response.data);
             this.respostaDeleteId = null;
@@ -171,4 +188,6 @@ class NoticiaStore {
 
 }
 
-export default NoticiaStore;
+const store = new NoticiaStore();
+
+export default store;

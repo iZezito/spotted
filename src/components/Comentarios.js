@@ -1,5 +1,5 @@
 //Extração do componente comentários
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     BsHeartFill,
     BsEnvelopeHeart,
@@ -12,14 +12,14 @@ import {
 import {Link} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
 import {observer} from "mobx-react";
-import Store from "../store/AuthStore";
+import store from "../store/Store";
 import Modal from "react-bootstrap/Modal";
 import {MdSend} from "react-icons/md";
 import Button from "react-bootstrap/Button";
+import comentarioStore from "../store/ComentarioStore";
 
-const store = new Store();
 
-const Comentarios = observer(() => {
+const Comentarios = observer(({show, handleClose, setShow}) => {
 
     const [replyingToCommentId, setReplyingToCommentId] = useState(null);
     const [editingCommentId, setEditingCommentId] = useState(null);
@@ -28,6 +28,14 @@ const Comentarios = observer(() => {
     const [editedReply, setEditedReply] = useState('');
     const [expandedComments, setExpandedComments] = useState([]);
     const [smShow, setSmShow] = useState(false);
+
+    useEffect(() => {
+        comentarioStore.getComentarios(store.noticiaAtualId);
+    }, [store.noticiaAtualId]);
+    const handleDeleteRespostaComentario = () => {
+        setSmShow(false)
+        store.deleteRespostaComentario()
+    }
 
     const handleVerRespostas = (commentId) => {
         if (expandedComments.includes(commentId)) {
@@ -38,6 +46,8 @@ const Comentarios = observer(() => {
     };
 
 
+
+
    return (
          <>
              <Modal show={show} onHide={handleClose}>
@@ -45,7 +55,7 @@ const Comentarios = observer(() => {
                      <Modal.Title className={'text-center'}>Comentários</Modal.Title>
                  </Modal.Header>
                  <Modal.Body>
-                     {store.noticias[indexNoticia]?.comentarios.map((comentario) => {
+                     {comentarioStore.comentarios?.map((comentario) => {
                          const isReplyingToComment = editingCommentId === comentario.id;
                          return (
                              <div className={'container'} key={comentario.id}>
@@ -256,3 +266,5 @@ const Comentarios = observer(() => {
          </>
    )
 });
+
+export default Comentarios;
