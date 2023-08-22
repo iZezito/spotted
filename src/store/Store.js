@@ -14,6 +14,7 @@ class NoticiaStore {
     comentario = {texto: '', autor: ''}
     respostaComentario = {texto: '', autor: ''}
     noticia = {titulo: '', descricao: '', comentarios:[]}
+    noticiaEdit = {titulo: '', descricao: ''}
 
     constructor() {
         makeAutoObservable(this);
@@ -31,7 +32,7 @@ class NoticiaStore {
             console.log(response.data)
             this.noticias = response.data
         }).catch((erro) => {
-            if (erro.response.status === 403) {
+            if (erro.response.status === 401) {
                 AuthStore.logout();
             }
         })
@@ -95,7 +96,7 @@ class NoticiaStore {
             this.comentarioDeleteId = null;
         }).catch((erro) => {
             console.log(erro);
-            if (erro.response.status === 403) {
+            if (erro.response.status === 401) {
                 AuthStore.logout();
             }
         })
@@ -111,7 +112,7 @@ class NoticiaStore {
             this.respostaComentarioEdit.texto = '';
         }).catch((erro) => {
             console.log(erro);
-            if (erro.response.status === 403) {
+            if (erro.response.status === 401) {
                 AuthStore.logout();
             }
         })
@@ -126,7 +127,7 @@ class NoticiaStore {
             this.comentarioEdit.texto = '';
         }).catch((erro) => {
             console.log(erro);
-            if (erro.response.status === 403) {
+            if (erro.response.status === 401) {
                 AuthStore.logout();
             }
         })
@@ -168,7 +169,7 @@ class NoticiaStore {
             this.noticias[this.noticias.findIndex(noticia => noticia.id === this.noticiaAtualId)].comentarios.push(response.data);
             this.comentario.texto = '';
         }).catch((erro) => {
-            if (erro.response.status === 403) {
+            if (erro.response.status === 401) {
                 AuthStore.logout();
             }
         }).finally(() => {
@@ -187,7 +188,7 @@ class NoticiaStore {
             this.respostaComentario.texto = '';
         }).catch((erro) => {
             console.log('Consolezada:', erro);
-            if (erro.response.status === 403) {
+            if (erro.response.status === 401) {
                 AuthStore.logout();
             }
             console.log(erro);
@@ -205,7 +206,7 @@ class NoticiaStore {
             this.noticia.texto = '';
         }).catch((erro) => {
             console.log(erro);
-            if (erro.response.status === 403) {
+            if (erro.response.status === 401) {
                 AuthStore.logout();
             }
         })

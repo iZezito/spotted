@@ -13,8 +13,6 @@ import {
 import {MdSend} from "react-icons/md";
 import store from "../store/Store";
 import {observer} from "mobx-react";
-import Toast from 'react-bootstrap/Toast';
-import ToastContainer from 'react-bootstrap/ToastContainer';
 import Button from "react-bootstrap/Button";
 
 
@@ -57,7 +55,7 @@ export default observer(function Main() {
 
     useState(() => {
         store.getNoticias();
-        console.log(store.user)
+        console.log('Usuário logado: ', store.user);
     }, [])
 
     const handleShowModalNoticia = () => setShowModalNoticia(true);
@@ -80,8 +78,8 @@ export default observer(function Main() {
                 </h1>
             </div>
             <div className="container d-flex justify-content-center">
-                <div className="row" onClick={handleShowModalNoticia}>
-                    <input type="text" className="form-control" placeholder="Qual o desmantelo de hoje?" disabled={true}/>
+                <div className="row" onClick={handleShowModalNoticia} >
+                    <p className="form-control">Qual o desmantelo de hoje?</p>
                 </div>
             </div>
             {/*<Toast show={showToast}>*/}
