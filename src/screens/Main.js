@@ -241,8 +241,8 @@ export default observer(function Main() {
                                         const isReplyingToResponse = editingReplyId === resposta.id;
 
                                         return (
-                                            <div className={'resposta-texto ms-5 mt-2 ps-1'}>
-                                                <div key={resposta.id}
+                                            <div className={'resposta-texto ms-5 mt-2 ps-1'} key={resposta.id}>
+                                                <div
                                                      className={'d-flex flex-row justify-content-between'}>
                                                     {isReplyingToResponse ? (
                                                         <>
